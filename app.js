@@ -1,6 +1,6 @@
-const x=10;
+const x = 10;
 console.log(x);
-function test(){
-console.log('test')
+function test() {
+  console.log('test');
 }
-test()
+test();

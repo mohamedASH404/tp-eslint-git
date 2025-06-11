@@ -1,12 +1,28 @@
-import js from "@eslint/js";
-import globals from "globals";
-import tseslint from "typescript-eslint";
-import { defineConfig } from "eslint/config";
+/* eslint-disable import/no-extraneous-dependencies */
 
+import { FlatCompat } from '@eslint/eslintrc';
 
-export default defineConfig([
-  { files: ["**/*.{js,mjs,cjs,ts,mts,cts}"], plugins: { js }, extends: ["js/recommended"] },
-  { files: ["**/*.js"], languageOptions: { sourceType: "commonjs" } },
-  { files: ["**/*.{js,mjs,cjs,ts,mts,cts}"], languageOptions: { globals: globals.browser } },
-  tseslint.configs.recommended,
-]);
+const compat = new FlatCompat();
+
+export default [
+  ...compat.extends('airbnb-base'),
+  {
+    languageOptions: {
+      globals: {
+        window: 'readonly',
+        document: 'readonly',
+        console: 'readonly',
+
+      },
+      parserOptions: {
+        ecmaVersion: 2021,
+        sourceType: 'module',
+      },
+    },
+    rules: {
+      'no-console': 'off',
+      indent: ['error', 2],
+      quotes: ['error', 'single'],
+    },
+  },
+];

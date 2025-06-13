@@ -1,15 +1,8 @@
-const x = 10;
-console.log(x);
-function test() {
-  console.log('test');
-}
-test();
+// const x = 5;
+console.log('Hello World!');
 
-/*
-// Tester  le  workflow
-const x = 10;
-console.log(x);
-function test() {
-  console.log('test');
+function greet(name) {
+  console.log(`Hi ${name}`);
 }
-test(); */
+
+greet('Alice');

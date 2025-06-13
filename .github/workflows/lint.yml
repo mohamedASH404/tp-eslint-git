@@ -1,4 +1,4 @@
-name: Lint Code
+name: Lint and Auto Fix
 
 on: [push, pull_request]
 
@@ -7,14 +7,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - uses: actions/setup-node@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      - run: npm ci
+      - name: Install dependencies
+        run: npm ci
 
-      - run: npm run lint
+      - name: Run ESLint with auto-fix
+        run: npm run lint -- --fix
 
-
+      - name: Commit and push changes if needed
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          if ! git diff --quiet; then
+            git add .
+            git commit -m "chore: auto-fix lint errors [CI]"
+            git push
+          fi
